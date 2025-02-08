@@ -35,6 +35,7 @@ def descargar_videos():
                 opciones = {
                     'outtmpl': f'{carpeta_destino}/%(title)s.%(ext)s',
                     'format': 'bestvideo+bestaudio/best',
+                    'merge_output_format': format_var.get(),  # Use selected format
                     'ffmpeg_location': os.path.join(os.path.dirname(__file__), 'ffmpeg', 'bin', 'ffmpeg.exe')
                 }
 
@@ -83,6 +84,13 @@ if __name__ == "__main__":
 
     btn_download = ttk.Button(button_frame, text="Descargar Videos", command=descargar_videos)
     btn_download.grid(row=0, column=2, padx=10)
+    
+    format_label = tk.Label(root, text="Formato de video:")
+    format_label.pack()
+
+    format_var = tk.StringVar(value="mp4")
+    format_menu = ttk.Combobox(root, textvariable=format_var, values=["mp4", "webm", "mkv"])
+    format_menu.pack()
 
     progress_bar = ttk.Progressbar(root, orient='horizontal', length=400, mode='determinate')
     progress_bar.pack(pady=10)
